@@ -109,7 +109,7 @@ public class RemoteTileLoader extends Thread
 						this.wait();
 					}
 				}
-				Thread.sleep(250);
+				Thread.sleep(150);
 			} 
 			catch (InterruptedException e) 
 			{

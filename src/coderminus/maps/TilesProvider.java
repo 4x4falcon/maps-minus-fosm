@@ -71,4 +71,9 @@ public class TilesProvider
 	{
 		inFileTilesCache.setTilePostfix(tilePostfix);
 	}
+
+	public boolean hasCached(String tileKey) 
+	{
+		return inFileTilesCache.hasTile(tileKey);
+	}
 }

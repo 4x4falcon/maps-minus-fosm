@@ -33,28 +33,40 @@ public class TilesCacher extends AsyncTask<Object, Object, Object>
 		nextTile.mapX = tile.mapX * 2;
 		nextTile.mapY = tile.mapY * 2;
 		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
-		getBitmap(nextTile);
+		if(!tilesProvider.hasCached(nextTile.key))
+		{
+			getBitmap(nextTile);
+		}
 
 		queueNextZoomAheadRecursively(nextTile, nextZoomLevel, stopLevel);
 		
 		nextTile.mapX = tile.mapX * 2 + 1;
 		nextTile.mapY = tile.mapY * 2;
 		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
-		getBitmap(nextTile);
+		if(!tilesProvider.hasCached(nextTile.key))
+		{
+			getBitmap(nextTile);
+		}
 
 		queueNextZoomAheadRecursively(nextTile, nextZoomLevel, stopLevel);
 		
 		nextTile.mapX = tile.mapX * 2;
 		nextTile.mapY = tile.mapY * 2 + 1;
 		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
-		getBitmap(nextTile);
+		if(!tilesProvider.hasCached(nextTile.key))
+		{
+			getBitmap(nextTile);
+		}
 
 		queueNextZoomAheadRecursively(nextTile, nextZoomLevel, stopLevel);
 		
 		nextTile.mapX = tile.mapX * 2 + 1;
 		nextTile.mapY = tile.mapY * 2 + 1;
 		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
-		getBitmap(nextTile);
+		if(!tilesProvider.hasCached(nextTile.key))
+		{
+			getBitmap(nextTile);
+		}
 
 		queueNextZoomAheadRecursively(nextTile, nextZoomLevel, stopLevel);
 	}
