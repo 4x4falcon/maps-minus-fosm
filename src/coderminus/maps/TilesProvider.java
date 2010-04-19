@@ -29,20 +29,22 @@ public class TilesProvider
 		if(inFileTilesCache.hasTile(tile.key))
 		{
 			inFileTilesCache.queueTileRequest(tile);
-			return null;
 		}
-		
-		remoteTileLoader.queueTileRequest(tile);
+		else
+		{
+			if(inFileTilesCache.getCandidateForResize(tile.zoom, tile.mapX, tile.mapY) != null)
+			{
+				resizedTilesCache.queueResize(new ResizeTile(tile.key, tile.mapX, tile.mapY, tile.zoom));
+			}
+			
+			remoteTileLoader.queueTileRequest(tile);
+		}
 
 		if(resizedTilesCache.hasTile(tile)) 
 		{
 			return resizedTilesCache.getTileBitmap(tile);
 		}
 		
-		if(inFileTilesCache.getCandidateForResize(tile.zoom, tile.mapX, tile.mapY) != null)
-		{
-			resizedTilesCache.queueResize(new ResizeTile(tile.key, tile.mapX, tile.mapY, tile.zoom));
-		}
 		
 		return null;
 	}
