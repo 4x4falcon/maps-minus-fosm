@@ -65,6 +65,7 @@ public class OsmMapView extends View
 	private int touchOffsetX;
 	private int touchOffsetY;
 	private Tile[] tiles = new Tile[9];
+	private Tile nextTile = new Tile();
 	private int incrementsX[] = new int[] {0, 1, 2, 0, 1, 2, 0, 1, 2};
 	private int incrementsY[] = new int[] {0, 0, 0, 1, 1, 1, 2, 2, 2};
 	
@@ -122,47 +123,47 @@ public class OsmMapView extends View
 		}
 	}
 
-//	private void queueNextZoomAhead(Tile tile) 
-//	{
-//		if(zoomLevel >= 17) return;
-//		int nextZoomLevel = zoomLevel + 1;
-//		
-//		nextTile.mapX = tile.mapX * 2;
-//		nextTile.mapY = tile.mapY * 2;
-//		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
-//		if(!tilesCache.hasTileBitmap(nextTile.key))
-//		//if(!tilesCache.isInFile(nextTile.key))
-//		{
-//			getBitmap(nextTile);
-//		}
-//		
-//		nextTile.mapX = tile.mapX * 2 + 1;
-//		nextTile.mapY = tile.mapY * 2;
-//		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
-//		if(!tilesCache.hasTileBitmap(nextTile.key))
-//		//if(!tilesCache.isInFile(nextTile.key))
-//		{
-//			getBitmap(nextTile);
-//		}
-//		
-//		nextTile.mapX = tile.mapX * 2;
-//		nextTile.mapY = tile.mapY * 2 + 1;
-//		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
-//		if(!tilesCache.hasTileBitmap(nextTile.key))
-//		//if(!tilesCache.isInFile(nextTile.key))
-//		{
-//			getBitmap(nextTile);
-//		}
-//		
-//		nextTile.mapX = tile.mapX * 2 + 1;
-//		nextTile.mapY = tile.mapY * 2 + 1;
-//		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
-//		if(!tilesCache.hasTileBitmap(nextTile.key))
-//		//if(!tilesCache.isInFile(nextTile.key))
-//		{
-//			getBitmap(nextTile);
-//		}
-//	}
+	private void queueNextZoomAhead(Tile tile) 
+	{
+		if(zoomLevel >= 17) return;
+		int nextZoomLevel = zoomLevel + 1;
+		
+		nextTile.mapX = tile.mapX * 2;
+		nextTile.mapY = tile.mapY * 2;
+		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
+		//if(!tilesCache.hasTileBitmap(nextTile.key))
+		//if(!tilesCache.isInFile(nextTile.key))
+		{
+			getBitmap(nextTile);
+		}
+		
+		nextTile.mapX = tile.mapX * 2 + 1;
+		nextTile.mapY = tile.mapY * 2;
+		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
+		//if(!tilesCache.hasTileBitmap(nextTile.key))
+		//if(!tilesCache.isInFile(nextTile.key))
+		{
+			getBitmap(nextTile);
+		}
+		
+		nextTile.mapX = tile.mapX * 2;
+		nextTile.mapY = tile.mapY * 2 + 1;
+		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
+		//if(!tilesCache.hasTileBitmap(nextTile.key))
+		//if(!tilesCache.isInFile(nextTile.key))
+		{
+			getBitmap(nextTile);
+		}
+		
+		nextTile.mapX = tile.mapX * 2 + 1;
+		nextTile.mapY = tile.mapY * 2 + 1;
+		nextTile.key  = nextZoomLevel + "/" + nextTile.mapX + "/" + nextTile.mapY + ".png";
+		//if(!tilesCache.hasTileBitmap(nextTile.key))
+		//if(!tilesCache.isInFile(nextTile.key))
+		{
+			getBitmap(nextTile);
+		}
+	}
 
 	private void drawLocation(Canvas canvas) 
 	{
@@ -222,8 +223,10 @@ public class OsmMapView extends View
 				tiles[index] = new Tile();
 			}
 			
+			// try to save on string relocations
 			if(tiles[index].mapX != (mapX + incrementsX[index]) ||
-			   tiles[index].mapY != (mapY + incrementsY[index])	)
+			   tiles[index].mapY != (mapY + incrementsY[index])	||
+			   tiles[index].zoom != zoomLevel)
 			{
     			tiles[index].mapX    = mapX + incrementsX[index];
     			tiles[index].mapY    = mapY + incrementsY[index];
@@ -307,7 +310,7 @@ public class OsmMapView extends View
 	{
 		if(pendingZoomLevel == this.zoomLevel)
 		{
-    		if((offsetX + 255) > this.getWidth()) 
+    		if((this.getWidth() != 0) && ((offsetX + 255) > this.getWidth())) 
     		{
     			this.offsetX = this.getWidth() - 255;
     		}
@@ -331,7 +334,7 @@ public class OsmMapView extends View
 	{
 		if(pendingZoomLevel == this.zoomLevel)
 		{
-    		if((offsetY + 255) > this.getHeight()) 
+    		if((this.getHeight() != 0) && ((offsetY + 255) > this.getHeight())) 
     		{
     			this.offsetY = this.getHeight() - 255;
     		}

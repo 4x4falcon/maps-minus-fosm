@@ -30,13 +30,13 @@ public class RemoteTileLoader extends Thread
 		
 		OsmBasePool()
 		{
-//			bases.add(urlBaseOSM_a);
-//			bases.add(urlBaseOSM_b);
-//			bases.add(urlBaseOSM_c);
+			bases.add(urlBaseOSM_a);
+			bases.add(urlBaseOSM_b);
+			bases.add(urlBaseOSM_c);
 
-			bases.add(urlBaseGoogle_1);
-			bases.add(urlBaseGoogle_2);
-			bases.add(urlBaseGoogle_3);
+//			bases.add(urlBaseGoogle_1);
+//			bases.add(urlBaseGoogle_2);
+//			bases.add(urlBaseGoogle_3);
 		}
 		
 		public String getNextBase() 
@@ -172,11 +172,12 @@ public class RemoteTileLoader extends Thread
 
 	private String generateUrl(String imageKey) 
 	{
-		StringTokenizer tokenizer = new StringTokenizer(imageKey, "/.");
-		String zoom = tokenizer.nextToken();
-		String mapX = tokenizer.nextToken();
-		String mapY = tokenizer.nextToken();
-		return "x=" + mapX + "&y=" + mapY + "&z=" + zoom;
+//		StringTokenizer tokenizer = new StringTokenizer(imageKey, "/.");
+//		String zoom = tokenizer.nextToken();
+//		String mapX = tokenizer.nextToken();
+//		String mapY = tokenizer.nextToken();
+//		return "x=" + mapX + "&y=" + mapY + "&z=" + zoom;
+		return imageKey;
 	}
 
 	private void copy(InputStream in, OutputStream out) 

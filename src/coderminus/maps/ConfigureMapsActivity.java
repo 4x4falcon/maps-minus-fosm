@@ -1,9 +1,12 @@
 package coderminus.maps;
 
+import java.util.HashMap;
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.util.Log;
@@ -56,26 +59,26 @@ public class ConfigureMapsActivity extends ListActivity
         }
     }
 
-//    private DatabaseHelper dbHelper;
+    private DatabaseHelper dbHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
-//		dbHelper = new DatabaseHelper(this);
-//		
-//        SQLiteDatabase db = dbHelper.getReadableDatabase();
-//        
-//        HashMap<String, String> mapsProjectionMap = new HashMap<String, String>();
-//        mapsProjectionMap.put(MapsColumns._ID       , MapsColumns._ID);
-//        mapsProjectionMap.put(MapsColumns.TITLE     , MapsColumns.TITLE);
-//        mapsProjectionMap.put(MapsColumns.CACHE_PATH, MapsColumns.CACHE_PATH);
-//
-//        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-//        qb.setTables(MapsColumns.TITLE);
-//        qb.setProjectionMap(mapsProjectionMap);
+		dbHelper = new DatabaseHelper(this);
+		
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         
-        //Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, orderBy);
+        HashMap<String, String> mapsProjectionMap = new HashMap<String, String>();
+        mapsProjectionMap.put(MapsColumns._ID       , MapsColumns._ID);
+        mapsProjectionMap.put(MapsColumns.TITLE     , MapsColumns.TITLE);
+        mapsProjectionMap.put(MapsColumns.CACHE_PATH, MapsColumns.CACHE_PATH);
+
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(MapsColumns.TITLE);
+        qb.setProjectionMap(mapsProjectionMap);
+        
+//        Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, orderBy);
         
 //        startManagingCursor(c);
 //		this.setListAdapter(new SimpleCursorAdapter(

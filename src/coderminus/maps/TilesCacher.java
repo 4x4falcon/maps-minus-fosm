@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 public class TilesCacher extends AsyncTask<Object, Object, Object>  
 {
-	private Tile nextTile = new Tile();
+	//private Tile nextTile = new Tile();
 	private TilesProvider tilesProvider;
 	
 	@Override
@@ -27,6 +27,8 @@ public class TilesCacher extends AsyncTask<Object, Object, Object>
 	{
 		if(queriedZoomLevel >= stopLevel) return;
 		int nextZoomLevel = queriedZoomLevel + 1;
+		
+		Tile nextTile = new Tile();
 		
 		nextTile.mapX = tile.mapX * 2;
 		nextTile.mapY = tile.mapY * 2;
